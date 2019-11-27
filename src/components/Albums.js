@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import clsx from "clsx";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import { CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
@@ -7,12 +8,24 @@ import { getPhotos } from '../fetch/Fetch';
 const useStyles = makeStyles({
   card: {
     maxWidth: 345,
+    borderStyle: 'solid',
   },
   media: {
     height: 140,
   },
   cardContainer: {
-    display: 'flex',
+    display: "flex",
+    justifyContent: "space-evenly",
+    marginTop: "5em",
+  },
+  borderGreen: {
+    borderColor: "green",
+  },
+  borderBlue: {
+    borderColor: "blue",
+  },
+  borderPurple: {
+    borderColor: "purple",
   }
 });
 
@@ -48,11 +61,15 @@ const Albums = () => {
   },[]);
 
   return (
-    albums.map((album) => {
+    albums.map((album, index) => {
       // show the last two photos of the album
         return(
-          <div classes={classes.cardContainer}>
-            <Card key={album[album.length - 2].id} className={classes.card}>
+          <div className={classes.cardContainer}>
+            <Card  key={album[album.length - 2].id} className={clsx(classes.card, {
+              [classes.borderGreen] : (index===0),
+              [classes.borderBlue] : (index===1),
+              [classes.borderPurple] : (index===2),
+            })}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -66,7 +83,11 @@ const Albums = () => {
                 </CardContent>
               </CardActionArea>
             </Card>
-            <Card key={album[album.length - 1].id} className={classes.card}>
+            <Card key={album[album.length - 1].id} className={clsx(classes.card, {
+              [classes.borderGreen] : (index===0),
+              [classes.borderBlue] : (index===1),
+              [classes.borderPurple] : (index===2),
+            })}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
